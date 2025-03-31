@@ -15,3 +15,15 @@ class Student:
         query = "INSERT INTO students (name, age, grade_level) VALUES (%s, %s, %s)"
         db.execute_query(query, (name, age, grade_level))
         db.close()
+        
+    @staticmethod
+    def list_students():
+        """List all students in the database"""
+        db = Database()
+        query = "SELECT * FROM students"
+        results = db.fetch_results(query)
+        # Print results in a readable format
+        for row in results:
+            print(f"ID: {row[0]}, Name: {row[1]}, Age: {row[2]}, Grade Level: {row[3]}")
+        db.close()
+        return results
