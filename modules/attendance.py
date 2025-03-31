@@ -1,25 +1,39 @@
 from modules.database import Database
+from modules.student import Student
 
 
 class Attendance:
     @staticmethod
-    def mark_attendance():
-        """Record attendance for a student"""
+    def mark_attendance(student_id):
+        """Mark attendance for a student"""
         db = Database()
-        id = input("Student ID: ")
-        status = input("Stauts (Present/Absent): ")
-    
-        query = "INSERT INTO attendance (student_id, date, status) VALUES (%s, CURDATE(), %s)"
-        db.execute_query(query, (id, status))
+        if not Student.validate_student(student_id):
+            print("❌ Student ID not found.")
+            db.close()
+            return
+
+        query = "SELECT name FROM students WHERE id = %s"
+        student = db.fetch_results(query, (student_id,))
+
+        if student:
+            print(f"✅ Student Found: {student[0][0]}")
+            confirmation = input("Mark attendance for today? (Y/N): ")
+            if confirmation.lower() == 'y':
+                query = "INSERT INTO attendance (student_id, date) VALUES (%s, CURDATE())"
+                db.execute_query(query, (student_id,))
+                print("✅ Attendance marked successfully!")
         db.close()
-        
+
+    @staticmethod
     def list_attendance():
-        """List attendance records"""
+        """List all attendance records"""
         db = Database()
-        query = "SELECT * FROM attendance"
+        query = "SELECT s.name, a.date FROM attendance a JOIN students s ON a.student_id = s.id ORDER BY a.date DESC"
         results = db.fetch_results(query)
-        for row in results:
-            # Print the results in a formatted way
-            print(f"Student ID: {row[1]}, Date: {row[2]}, Status: {row[3]}")
-            # print(row)
         db.close()
+
+        if results:
+            print(tabulate(results, headers=[
+                  "Student Name", "Attendance Date"], tablefmt="grid"))
+        else:
+            print("❌ No attendance records found.")
