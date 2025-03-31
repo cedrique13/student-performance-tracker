@@ -2,6 +2,15 @@ from modules.database import Database
 from modules.student import Student
 from tabulate import tabulate
 
+"""
+        CREATE TABLE IF NOT EXISTS attendance (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            student_id INT NOT NULL,
+            date DATE NOT NULL,
+            status VARCHAR(10) NOT NULL,
+            FOREIGN KEY (student_id) REFERENCES students(id)
+        )
+"""
 
 class Attendance:
     @staticmethod

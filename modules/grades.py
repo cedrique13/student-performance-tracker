@@ -3,6 +3,8 @@ from modules.student import Student
 from tabulate import tabulate
 
 
+#  CREATE TABLE grades (id INT  AUTO_INCREMENT PRIMARY KEY, student_id int, subject varchar(50), score INT, exam_type VARCHAR(50), FOREIGN KEY (student_id) REFERENCES students(id))
+
 class Grades:
     @staticmethod
     def record_grade(student_id, subject, score, exam_type):

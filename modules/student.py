@@ -2,6 +2,16 @@ from modules.database import Database
 from tabulate import tabulate
 
 
+"""
+        CREATE TABLE IF NOT EXISTS students (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            age INT NOT NULL,
+            grade_level VARCHAR(10) NOT NULL
+        )
+"""
+
+
 class Student:
     def __init__(self, student_id, name, age, grade_level):
         """Initialize student attributes"""
