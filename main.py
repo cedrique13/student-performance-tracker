@@ -24,11 +24,10 @@ def main():
         choice = input("Choose an option: ")
 
         if choice == "1":
-            student_id = input("Student ID (unique): ")
             name = input("Student Name: ")
             age = input("Age: ")
             grade = input("Grade Level: ")
-            Student.add_student(student_id, name, age, grade)
+            Student.add_student(name, age, grade)
         elif choice == "2":
             Student.list_students()
         elif choice == "3":

@@ -30,15 +30,15 @@ class Student:
         return bool(result)
 
     @staticmethod
-    def add_student(student_id, name, age, grade_level):
+    def add_student(name, age, grade_level):
         """Add a new student with unique ID"""
         db = Database()
-        if Student.validate_student(student_id):
-            print("❌ Student ID already exists. Try a different ID.")
-            db.close()
-            return
-        query = "INSERT INTO students (id, name, age, grade_level) VALUES (%s, %s, %s, %s)"
-        db.execute_query(query, (student_id, name, age, grade_level))
+        # if Student.validate_student(student_id):
+        #     print("❌ Student ID already exists. Try a different ID.")
+        #     db.close()
+        #     return
+        query = "INSERT INTO students (name, age, grade_level) VALUES (%s, %s, %s)"
+        db.execute_query(query, (name, age, grade_level))
         db.close()
         print("✅ Student added successfully!")
 
