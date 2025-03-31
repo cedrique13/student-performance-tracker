@@ -50,31 +50,32 @@ pip install mysql-connector-python tabulate
 Run the following SQL script in MySQL Workbench:
 
 ```sql
-CREATE DATABASE student_tracker;
+CREATE DATABASE IF NOT EXISTS student_tracker;
 USE student_tracker;
 
 CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
+    id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(255),
     age INT,
-    grade VARCHAR(10)
+    grade_level VARCHAR(50)
 );
 
 CREATE TABLE attendance (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
+    student_id VARCHAR(10),
     date DATE,
-    status ENUM('Present', 'Absent', 'Late'),
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
+    FOREIGN KEY (student_id) REFERENCES students(id)
 );
 
 CREATE TABLE grades (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    subject VARCHAR(50),
+    student_id VARCHAR(10),
+    subject VARCHAR(100),
     score FLOAT,
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE
+    exam_type VARCHAR(50),
+    FOREIGN KEY (student_id) REFERENCES students(id)
 );
+
 ```
 
 ---
@@ -83,14 +84,51 @@ CREATE TABLE grades (
 
 ```
 student-performance-tracker/
-│── database.py           # Handles database connection
-│── menu.py               # Main menu system
-│── student_management.py # Manages student records
-│── attendance_management.py # Manages attendance
-│── grades_management.py  # Manages student grades
-│── report_generation.py  # Generates reports
-│── README.md             # Project documentation
+│── modules/
+│   ├── database.py       # Database connection and query execution
+│   ├── student.py        # Manage student records (add, list, update, remove)
+│   ├── attendance.py     # Mark and list student attendance
+│   ├── grades.py         # Record and retrieve student grades
+│   ├── report.py         # Generate reports and identify low performers
+│── main.py               # CLI interface for interacting with the application
+│── .env                  # Environment variables for database connection
+└── README.md             # Documentation for the project
+
 ```
+
+
+---
+
+## ⚙️ Features  
+
+### 👤 Student Management  
+- ✅ **Add Student** (Ensures unique Student ID)  
+- ✅ **List Students**  
+- ✅ **Update Student Information**  
+- ✅ **Remove Student**  
+
+### 📅 Attendance Tracking  
+- ✅ **Mark Attendance** (Only valid students)  
+- ✅ **List Attendance Records**  
+
+### 📊 Academic Performance  
+- ✅ **Record Grades** (Subject, Score, Exam Type)  
+- ✅ **Retrieve Student Academic Record**  
+
+### 📜 Reports & Insights  
+- ✅ **Generate Student Performance Report** (Sorted from highest to lowest)  
+- ✅ **Identify Low-Performing Students** (Below 50%)  
+
+---
+
+## 🛠️ Setup & Installation  
+
+### 1️⃣ Clone the Repository  
+```sh
+git clone https://github.com/your-username/student-performance-tracker.git
+cd student-performance-tracker
+
+
 
 ---
 
