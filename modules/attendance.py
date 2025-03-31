@@ -34,3 +34,18 @@ class Attendance:
                 print("✅ Attendance marked successfully!")
         db.close()
 
+    @staticmethod
+    def list_attendance():
+        """List all attendance records"""
+        db = Database()
+        query = "SELECT s.name, a.date FROM attendance a JOIN students s ON a.student_id = s.id ORDER BY a.date DESC"
+        results = db.fetch_results(query)
+        db.close()
+
+        if results:
+            print(tabulate(results, headers=[
+                  "Student Name", "Attendance Date"], tablefmt="grid"))
+        else:
+            print("❌ No attendance records found.")
+
+ 
