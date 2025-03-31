@@ -1,5 +1,6 @@
 from modules.database import Database
 from modules.student import Student
+from tabulate import tabulate
 
 
 class Grades:
