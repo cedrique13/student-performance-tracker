@@ -19,7 +19,7 @@ class Grades:
         db.close()
         print("✅ Grade recorded successfully!")
 
-     @staticmethod
+    @staticmethod
     def retrieve_academic_record(student_id):
         """Retrieve a student's academic record"""
         db = Database()
@@ -32,4 +32,3 @@ class Grades:
                   "Subject", "Score", "Exam Type"], tablefmt="grid"))
         else:
             print("❌ No records found for this student.")
-
