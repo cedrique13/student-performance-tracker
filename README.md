@@ -2,83 +2,82 @@
 
 ## Overview
 
-The **Student Performance Tracker** is a Python-based application designed to help manage student records, including attendance, grades, and performance reports. It uses a **MySQL database** to store student information and provides a menu-driven interface for easy interaction.
+The **Student Performance Tracker** is a command-line interface (CLI) application designed to help educators and administrators track student performance efficiently. Built using Python and MySQL, the app allows users to manage student records, enter grades, track attendance, analyze performance trends, and generate reports.
 
 ## Features
 
-- **Student Management**: Add and view students.
-- **Attendance Tracking**: Mark and view attendance records.
-- **Grade Management**: Add and view student grades.
-- **Performance Reports**: Generate reports showing students' average scores.
+- **Student Management:** Add, update, and delete student records.
+- **Attendance Tracking:** Mark and list student attendance.
+- **Performance Tracking:** Record and update student grades for different subjects.
+- **Reports & Insights:** Generate performance reports and identify low-performing students.
+- **Database Integration:** Stores data in a structured MySQL database for easy retrieval.
+- **CLI-Based Interface:** Simple and interactive command-line interface for ease of use.
 
-## Technologies Used
+## Prerequisites
 
-- **Python** (Core programming language)
-- **MySQL** (Database for storing records)
-- **MySQL Connector** (Python package for database connection)
-- **Tabulate** (For formatting reports in a readable table format)
+Ensure you have the following installed on your system:
 
----
+- Python (>=3.8)
+- MySQL (as database backend)
+- Required Python libraries:
+  - `mysql-connector-python`
+  - `python-dotenv`
+  - `tabulate`
 
-## Installation Guide
+## Installation
 
-### Step 1: Install Python
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/student-performance-tracker.git
+   cd student-performance-tracker
+   ```
+2. Set up the database:
+   Run the following SQL script in MySQL Workbench:
+   ```sql
+   CREATE DATABASE IF NOT EXISTS student_tracker;
+   USE student_tracker;
 
-Ensure Python is installed. If not, download and install it from [python.org](https://www.python.org/downloads/).
-Check installation:
+   CREATE TABLE students (
+       id VARCHAR(10) PRIMARY KEY,
+       name VARCHAR(255),
+       age INT,
+       grade_level VARCHAR(50)
+   );
+
+   CREATE TABLE attendance (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       student_id VARCHAR(10),
+       date DATE,
+       FOREIGN KEY (student_id) REFERENCES students(id)
+   );
+
+   CREATE TABLE grades (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       student_id VARCHAR(10),
+       subject VARCHAR(100),
+       score FLOAT,
+       exam_type VARCHAR(50),
+       FOREIGN KEY (student_id) REFERENCES students(id)
+   );
+   ```
+
+## Usage
+
+Run the application with:
 
 ```sh
-python --version
+python main.py
 ```
 
-### Step 2: Install Required Packages
+You will be presented with a CLI menu with several options such:
 
-Run the following command to install necessary dependencies:
-
-```sh
-pip install mysql-connector-python tabulate
-```
-
-### Step 3: Install and Set Up MySQL
-
-1. Download and install MySQL from [MySQL Downloads](https://dev.mysql.com/downloads/).
-2. Open **MySQL Workbench** or the MySQL Command Line.
-3. Create the database and tables using the script below.
-
-### Step 4: Set Up the Database
-
-Run the following SQL script in MySQL Workbench:
-
-```sql
-CREATE DATABASE IF NOT EXISTS student_tracker;
-USE student_tracker;
-
-CREATE TABLE students (
-    id VARCHAR(10) PRIMARY KEY,
-    name VARCHAR(255),
-    age INT,
-    grade_level VARCHAR(50)
-);
-
-CREATE TABLE attendance (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id VARCHAR(10),
-    date DATE,
-    FOREIGN KEY (student_id) REFERENCES students(id)
-);
-
-CREATE TABLE grades (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id VARCHAR(10),
-    subject VARCHAR(100),
-    score FLOAT,
-    exam_type VARCHAR(50),
-    FOREIGN KEY (student_id) REFERENCES students(id)
-);
-
-```
-
----
+- Add a new student
+- Mark attendance
+- Enter grades
+- View student performance
+- Generate reports
+- Identify low-performing students
+- Exit the application
 
 ## Project Structure
 
@@ -93,121 +92,66 @@ student-performance-tracker/
 │── main.py               # CLI interface for interacting with the application
 │── .env                  # Environment variables for database connection
 └── README.md             # Documentation for the project
-
 ```
 
+## Example Operations
 
----
-
-## ⚙️ Features  
-
-### 👤 Student Management  
-- ✅ **Add Student** (Ensures unique Student ID)  
-- ✅ **List Students**  
-- ✅ **Update Student Information**  
-- ✅ **Remove Student**  
-
-### 📅 Attendance Tracking  
-- ✅ **Mark Attendance** (Only valid students)  
-- ✅ **List Attendance Records**  
-
-### 📊 Academic Performance  
-- ✅ **Record Grades** (Subject, Score, Exam Type)  
-- ✅ **Retrieve Student Academic Record**  
-
-### 📜 Reports & Insights  
-- ✅ **Generate Student Performance Report** (Sorted from highest to lowest)  
-- ✅ **Identify Low-Performing Students** (Below 50%)  
-
----
-
-## 🛠️ Setup & Installation  
-
-### 1️⃣ Clone the Repository  
-```sh
-git clone https://github.com/your-username/student-performance-tracker.git
-cd student-performance-tracker
-
-
-
----
-
-## Usage
-
-### Running the Application
-
-Start the application using:
+### Adding a Student:
 
 ```sh
-python menu.py
+Enter Student Name: John Doe
+Enter Age: 15
+Enter Grade Level: 10A
+Student added successfully!
 ```
 
-### Menu Options
-
-1. **Manage Students**: Add or view student records.
-2. **Manage Attendance**: Mark or view attendance records.
-3. **Manage Grades**: Add or view student grades.
-4. **Generate Reports**: Display student performance reports.
-5. **Exit**: Close the application.
-
----
-
-## How to Contribute
-
-### Step 1: Clone the Repository
+### Marking Attendance:
 
 ```sh
-git clone <repository_url>
-cd student-performance-tracker
+Enter Student ID: 101
+Enter Date (YYYY-MM-DD): 2024-03-31
+Attendance recorded successfully!
 ```
 
-### Step 2: Create a Branch
-
-Each contributor should create a branch based on their task:
+### Entering Grades:
 
 ```sh
-git checkout -b <feature_branch>
+Enter Student ID: 101
+Enter Subject: Mathematics
+Enter Score: 85
+Enter Exam Type: Midterm
+Grade recorded successfully!
 ```
 
-### Step 3: Commit and Push Changes
+### Generating Report:
 
 ```sh
-git add .
-git commit -m "Added feature XYZ"
-git push origin <feature_branch>
++-----------+----------+---------+
+| StudentID | Subject  | Score   |
++-----------+----------+---------+
+| 101       | Math     | 85      |
+| 101       | Science  | 90      |
++-----------+----------+---------+
 ```
 
-### Step 4: Submit a Pull Request
+### Identifying Low Performers:
 
-1. Go to the repository on GitHub.
-2. Click **Pull Requests** > **New Pull Request**.
-3. Select the branch and request a review before merging.
+```sh
++-----------+----------+---------+
+| StudentID | Subject  | Score   |
++-----------+----------+---------+
+| 102       | Math     | 45      |
+| 103       | Science  | 48      |
++-----------+----------+---------+
+```
 
----
+## Future Enhancements
 
-## Testing the Application
-
-### Functional Testing
-
-- Run **menu.py** and test each feature.
-- Verify MySQL tables contain expected records.
-
-### Database Connection Testing
-
-- Ensure **database.py** connects successfully to MySQL.
-
-### Report Testing
-
-- Check if reports generate correctly with formatted data.
-
----
-
-## Author
-
-This project is developed by **Cedrick and team**.
-
----
+- Implement a graphical user interface (GUI)
+- Add data visualization for student performance trends
+- Integrate machine learning for predictive analytics
 
 ## License
 
-This project is open-source and free to use under the MIT License.
+This project is licensed under the MIT License.
+
