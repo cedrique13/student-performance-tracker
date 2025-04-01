@@ -19,16 +19,4 @@ class Grades:
         db.close()
         print("✅ Grade recorded successfully!")
 
-    @staticmethod
-    def retrieve_academic_record(student_id):
-        """Retrieve a student's academic record"""
-        db = Database()
-        query = "SELECT subject, score, exam_type FROM grades WHERE student_id = %s ORDER BY score DESC"
-        results = db.fetch_results(query, (student_id,))
-        db.close()
-
-        if results:
-            print(tabulate(results, headers=[
-                  "Subject", "Score", "Exam Type"], tablefmt="grid"))
-        else:
-            print("❌ No records found for this student.")
+    
