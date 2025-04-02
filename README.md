@@ -90,7 +90,7 @@ student-performance-tracker/
 │   ├── grades.py         # Record and retrieve student grades
 │   ├── report.py         # Generate reports and identify low performers
 │── main.py               # CLI interface for interacting with the application
-│── .env                  # Environment variables for database connection
+│── .env.example          # Environment variables for database connection
 └── README.md             # Documentation for the project
 ```
 
