@@ -38,5 +38,3 @@ class Report:
                   "Name", "Subject", "Score", "Exam Type"], tablefmt="grid"))
         else:
             print("✅ No students with low performance!")
-
-
